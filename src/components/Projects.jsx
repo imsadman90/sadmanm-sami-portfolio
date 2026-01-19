@@ -1,4 +1,6 @@
 import { motion } from "framer-motion";
+import { useState } from "react";
+import ProjectDetail from "./ProjectDetail";
 
 const projects = [
   {
@@ -17,7 +19,7 @@ const projects = [
       "JWT",
     ],
     liveUrl: "https://scholar-stream-client.web.app",
-    repoUrl: "https://github.com/YOUR_GITHUB/SCHOLARSTREAM",
+    repoUrl: "https://github.com/imsadman90/scholar-stream-client.git",
     challenges:
       "Implementing secure role-based access control, managing application state across dashboards, and handling payment flow with Stripe securely.",
     improvements:
@@ -40,7 +42,7 @@ const projects = [
       "Firebase Auth",
     ],
     liveUrl: "https://habit-tracker-app-1e862.web.app/",
-    repoUrl: "https://github.com/YOUR_GITHUB/HABIT_TRACKER",
+    repoUrl: "https://github.com/imsadman90/habit-tracker-assignment.git",
     challenges:
       "Designing a smooth habit tracking flow, managing user-specific data securely, and maintaining responsive UI across devices.",
     improvements:
@@ -61,7 +63,7 @@ const projects = [
       "SweetAlert2",
     ],
     liveUrl: "https://lively-sunburst-a0100e.netlify.app/",
-    repoUrl: "https://github.com/YOUR_GITHUB/HERO_IO",
+    repoUrl: "https://github.com/imsadman90/Assignment-8.git",
     challenges:
       "Managing persistent state using localStorage and implementing smooth UX for install and uninstall actions.",
     improvements:
@@ -70,6 +72,8 @@ const projects = [
 ];
 
 const Projects = () => {
+  const [selectedProject, setSelectedProject] = useState(null);
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -92,7 +96,10 @@ const Projects = () => {
   };
 
   return (
-    <section id="work" className="relative z-10 py-12 px-4 sm:px-6 lg:px-8">
+    <section
+      id="work"
+      className="relative z-10 pt-28 pb-12 px-4 sm:px-6 lg:px-8"
+    >
       <div className="max-w-7xl mx-auto flex flex-col gap-12">
         {/* Section Header */}
         <motion.div
@@ -167,17 +174,17 @@ const Projects = () => {
 
                   {/* Actions */}
                   <div className="flex items-center gap-3">
-                    <motion.a
+                    <motion.button
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                       className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-primary hover:bg-primary/90 text-white rounded-lg text-sm font-semibold transition-colors"
-                      href={`#${project.id}`}
+                      onClick={() => setSelectedProject(project)}
                     >
                       <span className="material-symbols-outlined text-[16px]">
                         visibility
                       </span>
                       View Details
-                    </motion.a>
+                    </motion.button>
                     <motion.a
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
@@ -198,6 +205,13 @@ const Projects = () => {
           ))}
         </motion.div>
       </div>
+
+      {/* Project Detail Modal */}
+      <ProjectDetail
+        project={selectedProject}
+        isOpen={!!selectedProject}
+        onClose={() => setSelectedProject(null)}
+      />
     </section>
   );
 };
